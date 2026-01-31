@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { z } from "zod";
 import Product from "../models/Product.js";
+import Order from "../models/Order.js";
 import Category from "../models/Category.js";
 import { auth } from "../middleware/auth.js";
 import { admin } from "../middleware/admin.js";
@@ -98,12 +99,36 @@ router.delete(
   "/:id",
   auth,
   admin,
-  asyncWrap(async (req, res) => {
+  async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) return res.status(400).json({ error: "Invalid id" });
+    const used = await Order.exists({ "items.productId": req.params.id });
+    if (used) return res.status(409).json({ error: "Product used in orders" });
+
     const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ error: "Not Found" });
+
     res.json({ ok: true });
-  })
+  }
 );
 
 export default router;
+
+router.patch(
+  "/:id/variant/stock",
+  auth,
+  admin,
+  asyncWrap(async (req, res) => {
+    const { size, delta } = req.body;
+    if (!mongoose.isValidObjectId(req.params.id)) return res.status(400).json({ error: "Invalid id" });
+    if (typeof size !== "number" || typeof delta !== "number") return res.status(400).json({ error: "Invalid size or delta" });
+
+    const updated = await Product.findOneAndUpdate(
+      { _id: req.params.id, "variants.size": size },
+      { $inc: { "variants.$.stock": delta } },
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ error: "Not Found" });
+    res.json(updated);
+  })
+);

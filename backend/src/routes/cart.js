@@ -81,5 +81,12 @@ router.post(
     res.json({ ok: true });
   })
 );
+router.delete("/clear", auth, async (req, res) => {
+  await Cart.updateOne(
+    { userId: req.user._id },
+    { $set: { items: [] } }
+  );
+  res.json({ ok: true });
+});
 
 export default router;

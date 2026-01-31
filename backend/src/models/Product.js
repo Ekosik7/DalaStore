@@ -22,6 +22,6 @@ const ProductSchema = new mongoose.Schema(
 );
 
 ProductSchema.index({ categoryId: 1, price: 1 });
-ProductSchema.index({ "variants.size": 1, isActive: 1 });
+ProductSchema.index({ "variants.size": 1 });
 
 export default mongoose.model("Product", ProductSchema);
