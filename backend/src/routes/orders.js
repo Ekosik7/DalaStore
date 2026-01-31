@@ -2,10 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import { z } from "zod";
 import { auth } from "../middleware/auth.js";
-import express from "express"
-import mongoose from "mongoose"
-import { z } from "zod"
-import { auth } from "../middleware/auth.js"
 import { asyncWrap } from "../utils/asyncWrap.js"
 import Cart from "../models/Cart.js"
 import Order from "../models/Order.js"
