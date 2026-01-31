@@ -20,7 +20,6 @@ export function CartPage() {
         queryFn: cartApi.getCart,
     });
 
-    // Load products for all cart items
     const productQueries = useQueries({
         queries: (cart?.items || []).map((item) => ({
             queryKey: ['product', item.productId],
