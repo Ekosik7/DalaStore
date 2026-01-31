@@ -1,7 +1,3 @@
-// ============================================
-// TYPES
-// ============================================
-
 export interface User {
     id: string;
     name: string;
@@ -31,7 +27,7 @@ export interface Product {
     description: string;
     price: number;
     categoryId: string;
-    variants?: ProductVariant[];  // Optional for listing endpoints
+    variants?: ProductVariant[]; 
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
@@ -66,10 +62,6 @@ export interface Order {
     updatedAt: string;
 }
 
-// ============================================
-// API RESPONSE TYPES
-// ============================================
-
 export interface AuthResponse {
     token: string;
     user: User;
@@ -102,10 +94,6 @@ export interface ApiError {
     productId?: string;
     size?: number;
 }
-
-// ============================================
-// FORM INPUT TYPES
-// ============================================
 
 export interface RegisterInput {
     name: string;
@@ -148,13 +136,6 @@ export interface UpdateStockInput {
     delta: number;
 }
 
-// ============================================
-// UTILITY FUNCTIONS
-// ============================================
-
-/**
- * Normalizes MongoDB _id to id for consistency
- */
 export function normalizeId<T extends Record<string, any>>(
     obj: T & { _id?: string }
 ): Omit<T, '_id'> & { id: string } {
@@ -167,9 +148,6 @@ export function normalizeId<T extends Record<string, any>>(
     } as Omit<T, '_id'> & { id: string };
 }
 
-/**
- * Normalizes array of objects with _id
- */
 export function normalizeArray<T extends Record<string, any>>(
     arr: (T & { _id?: string })[]
 ): (Omit<T, '_id'> & { id: string })[] {

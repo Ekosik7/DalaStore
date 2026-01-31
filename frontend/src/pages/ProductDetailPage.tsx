@@ -57,8 +57,8 @@ export function ProductDetailPage() {
             quantity,
         };
 
-        console.log('🔍 Adding to cart:', payload);
-        console.log('🔍 Product data:', product);
+        console.log(' Adding to cart:', payload);
+        console.log(' Product data:', product);
 
         addToCartMutation.mutate(payload);
     };

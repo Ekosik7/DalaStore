@@ -8,7 +8,6 @@ export function Navbar() {
     const { user, logout } = useAuth();
     const [isDark, setIsDark] = useState(false);
 
-    // Get cart count
     const { data: cart } = useQuery({
         queryKey: ['cart'],
         queryFn: cartApi.getCart,
@@ -17,7 +16,6 @@ export function Navbar() {
 
     const cartCount = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
-    // Theme toggle
     useEffect(() => {
         const theme = localStorage.getItem('theme');
         if (theme === 'dark') {

@@ -19,7 +19,6 @@ export const cartApi = {
         await apiClient.delete('/api/v1/cart/clear');
     },
 
-    // Helper function for updating quantity (remove + add strategy)
     async updateQuantity(productId: string, size: number, newQuantity: number): Promise<void> {
         await this.removeFromCart({ productId, size });
         if (newQuantity > 0) {

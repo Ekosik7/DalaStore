@@ -24,7 +24,6 @@ export function LoginPage() {
         setErrors({});
         setApiError('');
 
-        // Validate
         const result = loginSchema.safeParse(formData);
         if (!result.success) {
             const fieldErrors: Record<string, string> = {};

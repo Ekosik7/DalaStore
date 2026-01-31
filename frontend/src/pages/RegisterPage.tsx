@@ -25,7 +25,6 @@ export function RegisterPage() {
         setErrors({});
         setApiError('');
 
-        // Validate
         const result = registerSchema.safeParse(formData);
         if (!result.success) {
             const fieldErrors: Record<string, string> = {};

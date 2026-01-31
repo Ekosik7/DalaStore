@@ -1,12 +1,7 @@
-/**
- * Storage utility for localStorage operations
- */
-
 const TOKEN_KEY = 'dalastore_token';
 const USER_KEY = 'dalastore_user';
 
 export const storage = {
-    // Token operations
     getToken(): string | null {
         return localStorage.getItem(TOKEN_KEY);
     },
@@ -19,7 +14,6 @@ export const storage = {
         localStorage.removeItem(TOKEN_KEY);
     },
 
-    // User operations
     getUser(): any | null {
         const user = localStorage.getItem(USER_KEY);
         return user ? JSON.parse(user) : null;
@@ -33,7 +27,6 @@ export const storage = {
         localStorage.removeItem(USER_KEY);
     },
 
-    // Clear all
     clear(): void {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_KEY);

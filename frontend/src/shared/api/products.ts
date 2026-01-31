@@ -13,33 +13,21 @@ interface GetProductsParams {
     q?: string;
 }
 
-/**
- * Maps backend product format to frontend format
- * Backend structure from database:
- * - sizes: string[] (e.g. ["40", "41", "42"])
- * - stock: number (single value for all sizes)
- * - isAvailable: boolean
- * - category: string (category name, not ObjectId)
- */
 function mapProduct(p: any): Product {
     const id = p._id?.$oid || p._id || p.id;
 
-    // Handle sizes - convert strings to numbers and create variants
     let variants: any[] = [];
 
     if (Array.isArray(p.variants) && p.variants.length > 0) {
-        // New structure with variants array
         variants = p.variants;
     } else if (Array.isArray(p.sizes)) {
-        // Old structure with sizes array - convert to variants
-        // sizes can be strings like ["40", "41"] or numbers
         const stock = p.stock || 0;
         const color = p.color || 'default';
 
         variants = p.sizes.map((size: any) => ({
             size: typeof size === 'string' ? parseInt(size, 10) : size,
             color: color,
-            stock: stock,  // Same stock for all sizes
+            stock: stock, 
         }));
     }
 

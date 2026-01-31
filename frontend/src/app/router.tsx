@@ -15,7 +15,6 @@ import { CategoriesPage } from '@/pages/admin/CategoriesPage';
 import { ProductsManagePage } from '@/pages/admin/ProductsManagePage';
 import { Loading } from '@/shared/ui/Loading';
 
-// Protected Route - requires authentication
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
     const { user, isLoading } = useAuth();
 
@@ -30,7 +29,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
 }
 
-// Admin Route - requires admin role
 function AdminRoute({ children }: { children: React.ReactNode }) {
     const { user, isLoading } = useAuth();
 
