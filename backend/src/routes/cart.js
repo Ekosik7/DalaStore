@@ -36,10 +36,22 @@ router.post(
     if (!mongoose.isValidObjectId(data.productId)) return res.status(400).json({ error: "Invalid productId" });
 
     const product = await Product.findById(data.productId).lean();
-    if (!product || !product.isActive) return res.status(404).json({ error: "Product not found" });
+    if (!product) return res.status(404).json({ error: "Product not found" });
 
-    const variant = product.variants.find((v) => v.size === data.size);
-    if (!variant) return res.status(400).json({ error: "Variant not found" });
+    const isActive = product.isActive !== undefined ? product.isActive : product.isAvailable;
+    if (!isActive) return res.status(404).json({ error: "Product not available" });
+
+    let variant;
+    if (Array.isArray(product.variants) && product.variants.length > 0) {
+      variant = product.variants.find((v) => v.size === data.size);
+    } else if (Array.isArray(product.sizes)) {
+      const sizeNumbers = product.sizes.map(s => typeof s === 'string' ? parseInt(s, 10) : s);
+      if (sizeNumbers.includes(data.size)) {
+        variant = { size: data.size, stock: product.stock || 0, color: product.color || 'default' };
+      }
+    }
+
+    if (!variant) return res.status(400).json({ error: `Variant with size ${data.size} not found` });
     if (variant.stock < data.quantity) return res.status(409).json({ error: "Not enough stock" });
 
     const priceSnapshot = product.price;
