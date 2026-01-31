@@ -6,8 +6,16 @@ import { connectDB } from "./config/db.js";
 
 const PORT = process.env.PORT || 4000;
 
-await connectDB(process.env.MONGO_URI);
+async function start() {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(PORT, () => {
+      console.log(`API listening on ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to connect to MongoDB", err);
+    process.exit(1);
+  }
+}
 
-app.listen(PORT, () => {
-  console.log(`API listening on ${PORT}`);
-});
+start();
