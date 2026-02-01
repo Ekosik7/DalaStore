@@ -22,8 +22,10 @@ const CreateSchema = z.object({
   price: z.number().min(0),
   categoryId: z.string(),
   variants: z.array(VariantSchema).min(1),
-  isActive: z.boolean().optional().default(true)
+
+  isActive: z.boolean().optional().default(true),
   imageUrl: z.string().max(500).optional().default("")
+});
 
 const UpdateSchema = CreateSchema.partial().refine((v) => Object.keys(v).length > 0, { message: "Empty update" });
 
@@ -44,7 +46,7 @@ router.post(
       price: data.price,
       categoryId: data.categoryId,
       variants: data.variants,
-      isActive: data.isActive
+      isActive: data.isActive,
       imageUrl: data.imageUrl || ""
     });
 
