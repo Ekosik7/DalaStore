@@ -16,7 +16,8 @@ const ProductSchema = new mongoose.Schema(
     price: { type: Number, required: true, min: 0 },
     categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true, index: true },
     variants: { type: [VariantSchema], default: [] },
-    isActive: { type: Boolean, default: true, index: true }
+    isActive: { type: Boolean, default: true, index: true },
+    imageUrl: { type: String, default: "", trim: true, maxlength: 500 }
   },
   { timestamps: true }
 );
