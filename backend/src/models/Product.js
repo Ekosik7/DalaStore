@@ -1,3 +1,4 @@
+
 import mongoose from "mongoose";
 
 const VariantSchema = new mongoose.Schema(
