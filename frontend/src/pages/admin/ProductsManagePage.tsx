@@ -18,13 +18,14 @@ export function ProductsManagePage() {
     const [stockManagement, setStockManagement] = useState<{ productId: string; size: number } | null>(null);
     const [stockDelta, setStockDelta] = useState(0);
 
-    const [formData, setFormData] = useState<ProductInput>({
+    const [formData, setFormData] = useState<ProductInput & { imageUrl?: string }>({
         name: '',
         description: '',
         price: 0,
         categoryId: '',
         variants: [{ size: 1, color: 'default', stock: 0 }],
         isActive: true,
+        imageUrl: '',
     });
 
     const { data: products, isLoading, error: fetchError, refetch } = useQuery({
@@ -105,6 +106,7 @@ export function ProductsManagePage() {
             categoryId: product.categoryId,
             variants: product.variants,
             isActive: product.isActive,
+            imageUrl: product.imageUrl || '',
         });
         setEditingId(product.id);
         setIsCreating(true);
@@ -154,6 +156,12 @@ export function ProductsManagePage() {
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             required
+                        />
+                        <Input
+                            label="Image URL"
+                            value={formData.imageUrl}
+                            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                            placeholder="https://..."
                         />
                         <div>
                             <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">

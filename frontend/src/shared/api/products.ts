@@ -41,6 +41,7 @@ function mapProduct(p: any): Product {
         isActive: p.isActive !== undefined ? p.isActive : (p.isAvailable !== undefined ? p.isAvailable : true),
         createdAt: p.createdAt || '',
         updatedAt: p.updatedAt || '',
+        imageUrl: p.imageUrl || p.image || '',
     };
 }
 

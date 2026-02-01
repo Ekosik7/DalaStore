@@ -27,10 +27,11 @@ export interface Product {
     description: string;
     price: number;
     categoryId: string;
-    variants?: ProductVariant[]; 
+    variants?: ProductVariant[];
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
+    imageUrl?: string;
 }
 
 export interface CartItem {
